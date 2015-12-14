@@ -51,10 +51,9 @@ Then /I should\s*(not)? see the following movies: (.*)/ do |negative, movie_list
     step %{I should#{negative ? " not" : ""} see "#{movie}"}
   end
 end
-  
-  
-Then /^the director of "(.*?)" should be "(.*?)"$/ do |title, director|
-  movie = Movie.find_by_title(title)
-  movie.director.should == director
+
+Then(/^the director of "(.*?)" should be "(.*?)"$/) do |title, director|
+   Movie.where("title = ? AND director = ?", title, director).length > 0
+   # express the regexp above with the code you wish you had
 end
 

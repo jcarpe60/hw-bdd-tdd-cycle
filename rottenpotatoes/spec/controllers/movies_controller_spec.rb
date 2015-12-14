@@ -50,7 +50,7 @@ describe MoviesController do
 	    post :create, {:movie => {:title => 'Dune', :rating => 'PG-13', :description => 'Desert Planet', :release_date => Time.now, :director => 'Paul Atreides'}}
         expect(assigns(:movie)).to be_a(Movie)
         expect(assigns(:movie)).to be_persisted
-	end
+	  end
   end
 
   describe 'edit a movie' do
@@ -75,28 +75,26 @@ describe MoviesController do
   describe "Update movies" do
 
 	  it "should redirect to the movie" do
-        movies = Movie.create! good_attributes
-        put :update, {:id => movies.to_param, :movie => good_attributes}
-        expect(response).to redirect_to(movie_path(movies))
-      end
+      movies = Movie.create! good_attributes
+      put :update, {:id => movies.to_param, :movie => good_attributes}
+      expect(response).to redirect_to(movie_path(movies))
+    end
 
-       it "should update the requested movie" do
-        movies = Movie.create! good_attributes
-        put :update, {:id => movies.to_param, :movie => good_attributes}
-        movies.reload
-        expect(Movie.last).to eq(movies)
-      end
+    it "should update the requested movie" do
+      movies = Movie.create! good_attributes
+      put :update, {:id => movies.to_param, :movie => good_attributes}
+      movies.reload
+      expect(Movie.last).to eq(movies)
+    end
   end
-  
-=begin
+
+
   describe 'When Director is missing' do
 	  it 'When I go to the similar movies page ' do 
 		movie = Movie.create! bad_attributes
       	get 'same_director', {:movie_id => movie.to_param}	
       	expect(assigns(:movie)).to eq(movie)
   	  end
-	end
-=end
+  end
 
-	
 end

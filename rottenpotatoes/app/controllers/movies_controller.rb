@@ -60,17 +60,16 @@ class MoviesController < ApplicationController
     flash[:notice] = "Movie '#{@movie.title}' deleted."
     redirect_to movies_path
   end
-  
+
   def same_director
-    movie = Movie.find(params[:id])
-    director_name = movie.director
-    
-    if director_name.blank?
-      flash[:notice] = %Q{'#{movie.title}' has no director info}
+    @id = params[:movie_id]
+    @movie = Movie.find(@id)
+    @director = @movie.director
+    if @director.blank?
+      flash[:notice] = "'#{@movie.title}' has no director info"
       redirect_to movies_path
     else
-      @movies = Movie.where(director: director_name)
-      flash[:notice] = %Q{There are #{@movies.size} movie(s) with "#{director_name}" as director}
+      @movies = Movie.same_director(@director)
     end
   end
 
